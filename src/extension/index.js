@@ -14,7 +14,6 @@ if (platform.includes('netflix.com')) {
 					point: epAndSeason.textContent,
 					epTitle: epTitle.textContent,
 				})
-				clearInterval(timer)
 			} else {
 				// user is watching a movie
 				const movieTitle = data.textContent
@@ -22,7 +21,6 @@ if (platform.includes('netflix.com')) {
 					type: 'Movie',
 					title: movieTitle,
 				})
-				clearInterval(timer)
 			}
 		}
 	}, 6000)

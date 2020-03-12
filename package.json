@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Everkers/Cooldown#readme",
   "dependencies": {
+    "discord-rich-presence": "0.0.8",
+    "discord-rpc": "^3.1.0",
     "ws": "^7.2.3"
   }
 }
