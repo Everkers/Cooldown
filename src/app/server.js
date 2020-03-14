@@ -1,8 +1,11 @@
-const client = require('discord-rich-presence')('687753371100512310')
+const rpc = require('discord-rpc')
 const ws = require('ws')
-client.on('connected', () => {
-	console.log('connected')
+const client = new rpc.Client({ transport: 'ipc' })
+const clientId = '687753371100512310'
+client.on('ready', () => {
+	console.log('ready')
 })
+
 const webSocketServer = new ws.Server({ port: 8080 })
 webSocketServer.on('connection', w => {
 	w.on('message', data => {
@@ -10,7 +13,7 @@ webSocketServer.on('connection', w => {
 		console.log(d)
 		if (d.platform == 'Netflix') {
 			if (d.type == 'Serie') {
-				client.updatePresence({
+				client.setActivity({
 					details: d.title,
 					state: d.epTitle,
 					largeImageKey: 'netflix',
@@ -18,28 +21,23 @@ webSocketServer.on('connection', w => {
 					instance: true,
 				})
 			} else {
-				client.updatePresence({
+				client.setActivity({
 					details: d.title,
 					largeImageKey: 'netflix',
 				})
 			}
 		} else if (d.platform == 'Youtube') {
 			if (!d.action) {
-				client.updatePresence({
-					details: `Idle`,
-					state: `Idle`,
-					largeImageKey: 'ytt',
-					instance: true,
-				})
+				client.clearActivity()
 			} else if (d.action == 'browse') {
-				client.updatePresence({
+				client.setActivity({
 					details: `Browsing`,
 					state: d.data,
 					largeImageKey: 'ytt',
 					instance: true,
 				})
 			} else if (d.action == 'watching') {
-				client.updatePresence({
+				client.setActivity({
 					details: d.videoTitle,
 					state: d.channel,
 					largeImageKey: 'ytt',
@@ -49,3 +47,26 @@ webSocketServer.on('connection', w => {
 		}
 	})
 })
+
+// ;(() => {
+// 	try {
+// 		const RPC = require('discord-rpc')
+// 		const clientId = '687753371100512310'
+// 		const scopes = ['rpc', 'rpc.api', 'messages.read']
+// 		const client = new RPC.Client({ transport: 'ipc' })
+// 		client.on('ready', () => {
+// 			console.log('ready')
+// 			client.setActivity({
+// 				details: 'test',
+// 				state: 'test',
+// 			})
+// 		})
+// 		setTimeout(() => {
+// 			client.clearActivity()
+// 		}, 10000)
+// 		client.login({ clientId })
+// 	} catch (err) {
+// 		console.log(err)
+// 	}
+// })()
+client.login({ clientId })
