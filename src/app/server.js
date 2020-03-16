@@ -41,6 +41,7 @@ webSocketServer.on('connection', w => {
 					details: d.videoTitle,
 					state: d.channel,
 					largeImageKey: 'ytt',
+					startTimestamp: Date.now(),
 					instance: true,
 				})
 			}

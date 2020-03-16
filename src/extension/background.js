@@ -4,11 +4,20 @@ chrome.runtime.onInstalled.addListener(function(details) {
 		chrome.storage.sync.set({ youtube: true })
 	}
 })
-const netflixCurrentVal = new Promise((resolve, reject) => {
+const values = new Promise((resolve, reject) => {
 	chrome.storage.sync.get(['netflix', 'youtube'], res => {
 		resolve(res)
 	})
 }).then(res => {
+	function sendData(data) {
+		const socket = new WebSocket('ws://127.0.0.1:8080')
+		socket.onopen = () => {
+			socket.send(JSON.stringify(data))
+		}
+	}
+	chrome.runtime.onMessage.addListener((data, sender, sendRes) => {
+		sendData(data)
+	})
 	chrome.tabs.onUpdated.addListener((int, obj, Tab) => {
 		if (Tab.title == 'Netflix' && res.netflix) {
 			const action = Tab.url.split('/')[3]
@@ -17,6 +26,14 @@ const netflixCurrentVal = new Promise((resolve, reject) => {
 			}
 		} else if (Tab.title.includes('YouTube') && res.youtube) {
 			const action = Tab.url.split('/')[4]
+			if (Tab.url.split('/')[3].includes('watch?')) {
+				chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+					chrome.tabs.sendMessage(tabs[0].id, {
+						action: 'watching',
+						platform: 'youtube',
+					})
+				})
+			}
 			if (
 				action == 'subscriptions' ||
 				action == 'trending' ||
@@ -30,13 +47,6 @@ const netflixCurrentVal = new Promise((resolve, reject) => {
 		}
 	})
 	chrome.runtime.onMessage.addListener((data, sender, sendRes) => {
-		console.log(data)
 		sendData(data)
 	})
-	function sendData(data) {
-		const socket = new WebSocket('ws://127.0.0.1:8080')
-		socket.onopen = e => {
-			socket.send(JSON.stringify(data))
-		}
-	}
 })

@@ -1,9 +1,40 @@
 const platform = window.location.host
-const netflixCurrentVal = new Promise((resolve, reject) => {
+const values = new Promise((resolve, reject) => {
 	chrome.storage.sync.get(['netflix', 'youtube'], res => {
 		resolve(res)
 	})
 }).then(res => {
+	chrome.runtime.onMessage.addListener((data, sender, sendRes) => {
+		if (
+			data.action == 'watching' &&
+			data.platform == 'youtube' &&
+			res.youtube
+		) {
+			const data = document.querySelector(
+				'h1.ytd-video-primary-info-renderer yt-formatted-string'
+			)
+			const channelName = document.querySelector(
+				'div#upload-info ytd-channel-name#channel-name div#text-container yt-formatted-string#text a'
+			).textContent
+			console.log(channelName)
+			const currentTime = document.querySelector(
+				'div.ytp-time-display span.ytp-time-current'
+			).textContent
+			const duration = document.querySelector(
+				'div.ytp-time-display span.ytp-time-duration'
+			).textContent
+
+			chrome.runtime.sendMessage({
+				//send data to background
+				action: 'watching',
+				platform: 'Youtube',
+				videoTitle: data.textContent,
+				duration,
+				currentTime,
+				channel: channelName,
+			})
+		}
+	})
 	if (platform.includes('netflix.com') && res.netflix) {
 		const timer = setInterval(() => {
 			const data = document.querySelector('.ellipsize-text')
@@ -31,27 +62,6 @@ const netflixCurrentVal = new Promise((resolve, reject) => {
 						title: movieTitle,
 					})
 				}
-			}
-		}, 6000)
-	} else if (platform.includes('youtube.com') && res.youtube) {
-		console.log(res.youtube)
-		const timer = setInterval(() => {
-			if (window.location.pathname == '/watch') {
-				// if user is watching a video{}
-				const data = document.querySelector(
-					'h1.ytd-video-primary-info-renderer yt-formatted-string'
-				)
-				const channelName = document.querySelector(
-					'div.ytd-channel-name yt-formatted-string a'
-				).textContent
-				console.log(channelName)
-				chrome.runtime.sendMessage({
-					//send data to background
-					action: 'watching',
-					platform: 'Youtube',
-					videoTitle: data.textContent,
-					channel: channelName,
-				})
 			}
 		}, 6000)
 	}
