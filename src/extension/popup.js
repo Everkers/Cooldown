@@ -2,50 +2,39 @@ const platforms = {
 	netflix: document.querySelector('#netflix'),
 	youtube: document.querySelector('#youtube'),
 }
-async function setValues() {
-	const { netflix: netflixCurrentVal } = await new Promise(
-		(resolve, reject) => {
-			chrome.storage.sync.get(['netflix'], res => {
-				resolve(res)
+async function getPlatformCurrentVal(platform) {
+	if (Array.isArray(platform)) {
+		const data = await new Promise((resolve, reject) => {
+			chrome.storage.sync.get(platform, res => {
+				res ? resolve(res) : reject(false)
 			})
-		}
-	)
-	const { youtube: youtubeCurrentVal } = await new Promise(
-		(resolve, reject) => {
-			chrome.storage.sync.get(['youtube'], res => {
-				resolve(res)
-			})
-		}
-	)
-	if (youtubeCurrentVal) {
-		document.querySelector('#youtube').checked = true
+		})
+		return data
 	} else {
-		document.querySelector('#youtube').checked = false
+		const data = await new Promise((resolve, reject) => {
+			chrome.storage.sync.get([platform], res => {
+				res ? resolve(res[platform]) : reject(false)
+			})
+		})
+		return data
 	}
-	if (netflixCurrentVal) {
-		document.querySelector('#netflix').checked = true
-	} else {
-		document.querySelector('#netflix').checked = false
+}
+async function setValues() {
+	const data = await getPlatformCurrentVal(['netflix', 'youtube'])
+	for (let property in data) {
+		if (data[property]) {
+			platforms[property].checked = true
+		} else {
+			platforms[property].checked = false
+		}
 	}
 }
 setValues()
 platforms.youtube.onclick = async () => {
-	const { youtube: youtubeCurrentVal } = await new Promise(
-		(resolve, reject) => {
-			chrome.storage.sync.get(['youtube'], res => {
-				resolve(res)
-			})
-		}
-	)
-	chrome.storage.sync.set({ youtube: !youtubeCurrentVal })
+	const value = await getPlatformCurrentVal('youtube')
+	chrome.storage.sync.set({ youtube: !value })
 }
 platforms.netflix.onclick = async () => {
-	const { netflix: netflixCurrentVal } = await new Promise(
-		(resolve, reject) => {
-			chrome.storage.sync.get(['netflix'], res => {
-				resolve(res)
-			})
-		}
-	)
-	chrome.storage.sync.set({ netflix: !netflixCurrentVal })
+	const value = await getPlatformCurrentVal('netflix')
+	chrome.storage.sync.set({ netflix: !value })
 }

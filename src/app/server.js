@@ -47,26 +47,4 @@ webSocketServer.on('connection', w => {
 		}
 	})
 })
-
-// ;(() => {
-// 	try {
-// 		const RPC = require('discord-rpc')
-// 		const clientId = '687753371100512310'
-// 		const scopes = ['rpc', 'rpc.api', 'messages.read']
-// 		const client = new RPC.Client({ transport: 'ipc' })
-// 		client.on('ready', () => {
-// 			console.log('ready')
-// 			client.setActivity({
-// 				details: 'test',
-// 				state: 'test',
-// 			})
-// 		})
-// 		setTimeout(() => {
-// 			client.clearActivity()
-// 		}, 10000)
-// 		client.login({ clientId })
-// 	} catch (err) {
-// 		console.log(err)
-// 	}
-// })()
 client.login({ clientId })
