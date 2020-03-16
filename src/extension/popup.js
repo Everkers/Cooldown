@@ -30,11 +30,9 @@ async function setValues() {
 	}
 }
 setValues()
-platforms.youtube.onclick = async () => {
-	const value = await getPlatformCurrentVal('youtube')
-	chrome.storage.sync.set({ youtube: !value })
-}
-platforms.netflix.onclick = async () => {
-	const value = await getPlatformCurrentVal('netflix')
-	chrome.storage.sync.set({ netflix: !value })
+for (let property in platforms) {
+	platforms[property].onclick = async () => {
+		const val = await getPlatformCurrentVal(property)
+		chrome.storage.sync.set({ [property]: !val })
+	}
 }
