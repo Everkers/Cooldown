@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", sans-serif;
+  background-color: #0f0e0f;
+  color: #fff;
+  height: 100vh;
+}
+
+.btn__primary {
+  background-color: #006fd4;
+  border: 0;
+  outline: none;
+  font-family: inherit;
+  color: #fff;
+  padding: 1em 4em;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+nav.navbar {
+  background-color: #0f1013;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 2em;
+}
+
+.container {
+  height: calc(100% - 80px);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .activity {
+  width: 50%;
+  height: 120px;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+}
+.container .activity .data {
+  position: absolute;
+  z-index: 2;
+  widows: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 2em;
+}
+.container .activity .data .title span {
+  font-weight: bold;
+  font-size: 18px;
+}
+.container .activity .data .sub_title span {
+  font-size: 15px;
+  opacity: 0.8;
+}
+.container .activity .overlay {
+  background-color: rgba(0, 0, 0, 0.584);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+}
+.container .activity .background {
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.container .activity .background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*# sourceMappingURL=main.css.map */

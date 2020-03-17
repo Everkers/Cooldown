@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="./assets/css/main.css">
+        <script>
+            const $ = jQuery = require("jquery")
+        </script>
+		<title>Cooldown</title>
+	</head>
+	<body>
+        <nav class='navbar'>
+            <h3>Cooldown</h3>
+        </nav>
+        <div class="container">
+            <button class='btn__primary' id='start_service'>Start Service</button>
+            <div style="display: none;" class="activity">
+                <div class="data">
+                    <div class="title">
+                        <span>
+                        </span>
+                    </div>
+                    <div class="sub_title">
+                        <span>ChildCow</span>                        
+                    </div>
+                </div>
+                <div class="overlay"></div>
+                <div class="background">
+                    <img src="" alt="activity">
+                </div>
+            </div>
+        </div>
+        <script src='../renderer.js''></script>
+	</body>
+</html>

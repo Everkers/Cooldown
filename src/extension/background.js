@@ -27,7 +27,7 @@ const values = new Promise((resolve, reject) => {
 		} else if (Tab.title.includes('YouTube') && res.youtube) {
 			const action = Tab.url.split('/')[4]
 			if (Tab.url.split('/')[3].includes('watch?')) {
-				chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+				chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
 					chrome.tabs.sendMessage(tabs[0].id, {
 						action: 'watching',
 						platform: 'youtube',

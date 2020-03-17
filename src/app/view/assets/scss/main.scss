@@ -1,0 +1,63 @@
+@import './variables', './global', 'classes.scss';
+nav.navbar {
+	background-color: $background_secondary;
+	height: 80px;
+	display: flex;
+	align-items: center;
+	padding: 0 2em;
+}
+.container {
+	height: calc(100% - 80px);
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	.activity {
+		width: 50%;
+		height: 120px;
+		border-radius: 15px;
+		position: relative;
+		overflow: hidden;
+		.data {
+			position: absolute;
+			z-index: 2;
+			widows: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			padding: 0 2em;
+			.title {
+				span {
+					font-weight: bold;
+					font-size: 18px;
+				}
+			}
+			.sub_title {
+				span {
+					font-size: 15px;
+					opacity: 0.8;
+				}
+			}
+		}
+		.overlay {
+			background-color: rgba(0, 0, 0, 0.584);
+			position: relative;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			z-index: 1;
+		}
+		.background {
+			overflow: hidden;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+	}
+}

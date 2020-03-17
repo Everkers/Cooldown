@@ -1,26 +1,32 @@
 {
-  "name": "Cooldown",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Everkers/Cooldown.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Everkers/Cooldown/issues"
-  },
-  "homepage": "https://github.com/Everkers/Cooldown#readme",
-  "dependencies": {
-    "discord-rich-presence": "0.0.8",
-    "discord-rpc": "^3.1.0",
-    "dotenv": "^8.2.0",
-    "ws": "^7.2.3"
-  }
+	"name": "Cooldown",
+	"version": "1.0.0",
+	"description": "",
+	"main": "./src/app/main.js",
+	"scripts": {
+		"start": "electron .",
+		"watch-sass": "sass --watch src/app/view/assets/scss/main.scss:src/app/view/assets/css/main.css"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Everkers/Cooldown.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Everkers/Cooldown/issues"
+	},
+	"homepage": "https://github.com/Everkers/Cooldown#readme",
+	"dependencies": {
+		"discord-rich-presence": "0.0.8",
+		"discord-rpc": "^3.1.0",
+		"dotenv": "^8.2.0",
+		"jquery": "^3.4.1",
+		"sass": "^1.26.3",
+		"ws": "^7.2.3"
+	},
+	"devDependencies": {
+		"electron": "^8.1.1"
+	}
 }

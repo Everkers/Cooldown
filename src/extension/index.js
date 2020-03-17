@@ -13,6 +13,7 @@ const values = new Promise((resolve, reject) => {
 			const data = document.querySelector(
 				'h1.ytd-video-primary-info-renderer yt-formatted-string'
 			)
+			const id = window.location.href.split('?v=')[1]
 			const channelName = document.querySelector(
 				'div#upload-info ytd-channel-name#channel-name div#text-container yt-formatted-string#text a'
 			).textContent
@@ -31,6 +32,7 @@ const values = new Promise((resolve, reject) => {
 				videoTitle: data.textContent,
 				duration,
 				currentTime,
+				id,
 				channel: channelName,
 			})
 		}
